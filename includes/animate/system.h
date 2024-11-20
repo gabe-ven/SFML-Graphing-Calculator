@@ -1,6 +1,7 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 #include <vector>
+#include "graph.h"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
@@ -8,15 +9,12 @@ class System
 {
 public:
     System();
-    void Step(int command);
-    int Size();
-    void Draw(sf::RenderWindow &widnow);
+    void set_info();
+    void Step(int command);              // Calls graph::step()
+    void Draw(sf::RenderWindow &window); // Calls graph::draw()
 
 private:
-    //    vector<Particle> system;
-    vector<sf::Shape *> shapes;
-    vector<sf::Vector2f> velocities;
-    vector<int> rotationSpeeds;
+    Graph _g;
 };
 
 #endif // SYSTEM_H

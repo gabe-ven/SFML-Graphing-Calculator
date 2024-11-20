@@ -43,7 +43,7 @@ animate::animate() : sidebar(WORK_PANEL, SIDE_BAR)
         exit(-1);
     }
 
-    myTextLabel = sf::Text("balls", font);
+    myTextLabel = sf::Text("", font);
     myTextLabel.setCharacterSize(20);
     myTextLabel.setStyle(sf::Text::Bold);
     myTextLabel.setFillColor(sf::Color::Green);
