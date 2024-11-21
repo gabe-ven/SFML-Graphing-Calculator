@@ -9,13 +9,27 @@ class Graph_info
 public:
     Graph_info();
 
+    void set_equation(const string &equation);
+    void set_points(int points);
+    void set_window_dimensions(double width, double height);
+    void set_origin(double x, double y);
+    void set_scale(double x_scale, double y_scale);
+    void set_domain(double x_min, double x_max);
+
+    string get_equation() const;
+    int get_points() const;
+    sf::Vector2f get_window_dimensions() const;
+    sf::Vector2f get_origin() const;
+    sf::Vector2f get_scale() const;
+    sf::Vector2f get_domain() const;
+
 private:
     string _equation;
     int _points; // # of points
-    vector<sf::Vector2f> _window_dimensions;
-    vector<sf::Vector2f> _origin; // graph's (0,0) in src coords
-    vector<sf::Vector2f> _scale;
-    vector<sf::Vector2f> _domain;
+    sf::Vector2f _window_dimensions;
+    sf::Vector2f _origin; // graph's (0,0) in screen coords
+    sf::Vector2f _scale;
+    sf::Vector2f _domain;
 };
 
 #endif

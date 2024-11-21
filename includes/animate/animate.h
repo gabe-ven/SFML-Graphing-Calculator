@@ -2,11 +2,12 @@
 #define GAME_H
 #include <SFML/Graphics.hpp>
 #include "system.h"
+#include "graph_info.h"
 #include "sidebar.h"
 class animate
 {
 public:
-    animate();
+    animate(Graph_info *info);
     void run();
     void processEvents();
     void update();
@@ -22,6 +23,8 @@ private:
     sf::Text myTextLabel;       // text to draw on main screen
     bool mouseIn;               // mouse is in the screen
     Sidebar sidebar;            // rectangular message sidebar
+
+    Graph_info *_info;
 };
 
 string mouse_pos_string(sf::RenderWindow &window);

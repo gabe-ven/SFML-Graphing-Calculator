@@ -10,7 +10,7 @@ Sidebar::Sidebar(float left, float width) : _left(left), _width(width)
     items.reserve(50);
 
     // set up the sidebar rectangle:
-    rect.setFillColor(sf::Color(105, 105, 105)); //(192,192,192)); //silver
+    rect.setFillColor(sf::Color(40, 40, 40));
     rect.setPosition(sf::Vector2f(left, 0));
     rect.setSize(sf::Vector2f(width, SCREEN_HEIGHT));
     cout << "Sidebar CTOR: about to load font." << endl;

@@ -1,21 +1,25 @@
 #include "system.h"
 #include "random.h"
 #include "constants.h"
+#include "graph_info.h"
 #include <iostream>
 #include <vector>
 
-System::System()
+System::System(Graph_info *info) : _g(info) // pass info to graph
 {
-    set_info();
+    _info = info;
+    set_info(info);
 }
 
-void System::set_info()
+void System::set_info(Graph_info *info)
 {
+    _info = info;
+    _g.update(info); // call update in graph
 }
 
-void System::Step(int command)
+void System::Step(int command, Graph_info *info)
 {
-    _g.Step(command);
+    _g.update(info);
 }
 
 // draw graph here

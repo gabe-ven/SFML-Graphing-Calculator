@@ -4,7 +4,7 @@
 using namespace std;
 #include "system.h"
 
-animate::animate() : sidebar(WORK_PANEL, SIDE_BAR)
+animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info)
 
 {
     cout << "animate CTOR: TOP" << endl;
@@ -17,7 +17,7 @@ animate::animate() : sidebar(WORK_PANEL, SIDE_BAR)
     //   at that point, the constructor of the System class will take a vector
     //   of objects created by the animate object.
     //   animate will
-    system = System();
+    system = System(info);
     window.setFramerateLimit(120);
 
     mouseIn = true;
@@ -76,7 +76,7 @@ void animate::Draw()
 void animate::update()
 {
     // cause changes to the data for the next frame
-    system.Step(command);
+    system.Step(command, _info);
     command = 0;
     if (mouseIn)
     {
@@ -90,7 +90,7 @@ void animate::update()
 }
 void animate::render()
 {
-    window.clear();
+    window.clear(sf::Color(30, 30, 30));
     Draw();
     window.display();
 }
