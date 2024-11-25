@@ -4,6 +4,7 @@
 #include "system.h"
 #include "graph_info.h"
 #include "sidebar.h"
+#include "coord_translator.h"
 class animate
 {
 public:

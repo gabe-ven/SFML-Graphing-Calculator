@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 #include "token.h"
 
 using namespace std;
@@ -15,6 +16,7 @@ public:
     int get_type() { return 3; }
     string get_func() { return _func; }
     void print(ostream &os) { os << _func; }
+    double evaluate(double x);
     friend ostream &operator<<(ostream &os, Function *token)
     {
         token->print(os);

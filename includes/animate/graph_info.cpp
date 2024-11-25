@@ -2,12 +2,12 @@
 
 Graph_info::Graph_info()
 {
-    _equation = "y = x";
-    _points = 100;
-    _window_dimensions = sf::Vector2f(800, 600);
-    _origin = sf::Vector2f(400, 300);
-    _scale = sf::Vector2f(1.0, 1.0);
-    _domain = sf::Vector2f(-10, 10);
+    set_equation("X");
+    set_points(11);
+    set_window_dimensions(1125, 800);
+    set_origin(555, 405);
+    set_scale(1, 1);
+    set_domain(-10, 10);
 }
 
 void Graph_info::set_equation(const string &equation)

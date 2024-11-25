@@ -4,9 +4,10 @@
 using namespace std;
 #include "system.h"
 
-animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info)
+animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info), _info(info)
 
 {
+
     cout << "animate CTOR: TOP" << endl;
     window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML window!");
     // VideoMode class has functions to detect screen size etc.
@@ -99,8 +100,11 @@ void animate::processEvents()
 {
     sf::Event event;
     float mouseX, mouseY;
+    static bool tabPressed = false;
     while (window.pollEvent(event)) // or waitEvent
     {
+        system.HandleInput(event);
+
         // check the type of the event...
         switch (event.type)
         {
@@ -121,6 +125,20 @@ void animate::processEvents()
                 sidebar[SB_KEY_PRESSED] = "RIGHT ARROW";
                 command = 6;
                 break;
+            case sf::Keyboard::Tab:
+                sidebar[SB_KEY_PRESSED] = "TAB";
+                command = 7;
+                tabPressed = true;
+                break;
+            case sf::Keyboard::Enter:
+                if (tabPressed)
+                {
+                    sidebar[SB_KEY_PRESSED] = "ENTER";
+                    tabPressed = false;
+                    render();
+                }
+                break;
+
             case sf::Keyboard::Escape:
                 sidebar[SB_KEY_PRESSED] = "ESC: EXIT";
                 window.close();

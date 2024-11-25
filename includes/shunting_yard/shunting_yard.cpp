@@ -35,7 +35,7 @@ Queue<Token *> ShuntingYard::postfix(Queue<Token *> input_q)
         }
         else if (token->get_type() == 3) // func
         {
-            postfix_q.push(token);
+            operators.push(token);
         }
         else if (token->get_type() == 4) // left paren
         {
@@ -52,6 +52,10 @@ Queue<Token *> ShuntingYard::postfix(Queue<Token *> input_q)
             {
                 operators.pop();
             }
+        }
+        else if (token->get_type() == 6)
+        {
+            postfix_q.push(token);
         }
     }
 

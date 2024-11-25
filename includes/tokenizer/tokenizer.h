@@ -1,5 +1,5 @@
-#ifndef SHUNTING_YARD_H
-#define SHUNTING_YARD_H
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
 
 #include <iostream>
 #include <iomanip>
@@ -16,19 +16,10 @@
 
 using namespace std;
 
-class ShuntingYard
+class Tokenizer
 {
 public:
-    ShuntingYard() {}
-    ShuntingYard(Queue<Token *> input_q) { input = input_q; }
-
-    Queue<Token *> postfix();
-    Queue<Token *> postfix(Queue<Token *> input_q);
-
-    void infix(Queue<Token *> input_q);
-
-private:
-    Queue<Token *> input;
+    Queue<Token *> tokenize(const string &equation);
 };
 
 #endif

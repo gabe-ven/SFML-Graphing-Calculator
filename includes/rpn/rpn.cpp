@@ -15,7 +15,7 @@ double RPN::operator()(double num)
         Token *token = input.front();
         input.pop();
 
-        if (token->get_type() == 3)
+        if (token->get_type() == 6)
         {
             sub.push(new Integer(num));
         }
@@ -50,6 +50,17 @@ double RPN::rpn(Queue<Token *> input_q)
             double num2 = token2->get_val();
 
             double result = token->evaluate(num1, num2);
+
+            rpn_stack.push(new Integer(result));
+        }
+        else if (token->get_type() == 3)
+        {
+            Token *operand = rpn_stack.pop();
+            double value = operand->get_val();
+
+            Function *func = dynamic_cast<Function *>(token);
+            assert(func != nullptr);
+            double result = func->evaluate(value);
 
             rpn_stack.push(new Integer(result));
         }
