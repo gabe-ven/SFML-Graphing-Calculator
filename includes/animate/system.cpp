@@ -26,7 +26,7 @@ void System::Step(int command, Graph_info *info)
     else if (command == 6)
     {
     }
-    else if (command == 7)
+    else if (command == 7) // input box
     {
         inputActive = !inputActive;
 
@@ -34,6 +34,19 @@ void System::Step(int command, Graph_info *info)
         {
             createInputBox();
         }
+    }
+    else if (command == 8) // zoom in
+    {
+        sf::Vector2f domain = info->get_domain();
+        if (domain.y - domain.x > 10)
+        {
+            info->set_domain(domain.x + 5, domain.y - 5);
+        }
+    }
+    else if (command == 9) // zoom out
+    {
+        sf::Vector2f domain = info->get_domain();
+        info->set_domain(domain.x - 5, domain.y + 5);
     }
     _g.update(info);
 }

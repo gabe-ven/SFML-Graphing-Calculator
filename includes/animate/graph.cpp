@@ -35,7 +35,7 @@ void Graph::Draw(sf::RenderWindow &window)
     // draw each point onto graph
     for (int i = 0; i < _points.size(); i++)
     {
-        sf::CircleShape point(1);
+        sf::CircleShape point(1.5);
         point.setPosition(_points[i].x - 5, _points[i].y - 5);
         point.setFillColor(sf::Color::Green);
         window.draw(point);

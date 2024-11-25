@@ -41,7 +41,7 @@ vector<sf::Vector2f> Plot::operator()()
 
     vector<sf::Vector2f> graph_points;
 
-    for (double x = domain.x; x <= domain.y; x += increment)
+    for (double x = domain.x; x <= domain.y; x += 0.05)
     {
         rpn.set_input(_post_fix);
         double y = rpn(x);

@@ -7,7 +7,7 @@ using namespace std;
 animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info), _info(info)
 
 {
-
+    tabPressed = false;
     cout << "animate CTOR: TOP" << endl;
     window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML window!");
     // VideoMode class has functions to detect screen size etc.
@@ -100,7 +100,6 @@ void animate::processEvents()
 {
     sf::Event event;
     float mouseX, mouseY;
-    static bool tabPressed = false;
     while (window.pollEvent(event)) // or waitEvent
     {
         system.HandleInput(event);
@@ -138,10 +137,14 @@ void animate::processEvents()
                     render();
                 }
                 break;
+            case sf::Keyboard::Period:
+                sidebar[SB_KEY_PRESSED] = "ZOOM IN";
+                command = 8;
+                break;
 
-            case sf::Keyboard::Escape:
-                sidebar[SB_KEY_PRESSED] = "ESC: EXIT";
-                window.close();
+            case sf::Keyboard::Comma:
+                sidebar[SB_KEY_PRESSED] = "ZOOM OUT";
+                command = 9;
                 break;
             }
 
