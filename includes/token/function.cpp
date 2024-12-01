@@ -29,4 +29,8 @@ double Function::evaluate(double x)
     {
         return sqrt(x);
     }
+    else if (_func == "e")
+    {
+        return exp(x);
+    }
 }

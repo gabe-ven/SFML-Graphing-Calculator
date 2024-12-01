@@ -102,7 +102,7 @@ void animate::processEvents()
     float mouseX, mouseY;
     while (window.pollEvent(event)) // or waitEvent
     {
-        system.HandleInput(event);
+        system.Input(event);
 
         // check the type of the event...
         switch (event.type)
@@ -116,17 +116,21 @@ void animate::processEvents()
         case sf::Event::KeyPressed:
             switch (event.key.code)
             {
+            case sf::Keyboard::R:
+                sidebar[SB_KEY_PRESSED] = "RESET";
+                command = 3;
+                break;
             case sf::Keyboard::Left:
-                sidebar[SB_KEY_PRESSED] = "LEFT ARROW";
+                sidebar[SB_KEY_PRESSED] = "PAN LEFT";
                 command = 4;
                 break;
             case sf::Keyboard::Right:
-                sidebar[SB_KEY_PRESSED] = "RIGHT ARROW";
-                command = 6;
+                sidebar[SB_KEY_PRESSED] = "PAN RIGHT";
+                command = 5;
                 break;
             case sf::Keyboard::Tab:
                 sidebar[SB_KEY_PRESSED] = "TAB";
-                command = 7;
+                command = 6;
                 tabPressed = true;
                 break;
             case sf::Keyboard::Enter:
@@ -139,12 +143,12 @@ void animate::processEvents()
                 break;
             case sf::Keyboard::Period:
                 sidebar[SB_KEY_PRESSED] = "ZOOM IN";
-                command = 8;
+                command = 7;
                 break;
 
             case sf::Keyboard::Comma:
                 sidebar[SB_KEY_PRESSED] = "ZOOM OUT";
-                command = 9;
+                command = 8;
                 break;
             }
 

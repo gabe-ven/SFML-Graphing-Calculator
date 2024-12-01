@@ -3,6 +3,7 @@
 #include <vector>
 #include "graph.h"
 #include "graph_info.h"
+#include "coord_translator.h"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
@@ -13,7 +14,7 @@ public:
     void set_info(Graph_info *info);
     void Step(int command, Graph_info *info); // Calls graph::update()
     void Draw(sf::RenderWindow &window);      // Calls graph::draw()
-    void HandleInput(sf::Event event);
+    void Input(sf::Event event);
     void createInputBox();
 
 private:
@@ -24,7 +25,7 @@ private:
     sf::Text inputText;
     sf::Font font;
     string userInput;
-    bool inputActive;
+    bool inputOn;
 };
 
 #endif // SYSTEM_H

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cctype>
 
 #include "../../includes/queue/MyQueue.h"
 #include "../../includes/stack/MyStack.h"

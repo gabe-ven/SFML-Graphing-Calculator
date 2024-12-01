@@ -2,12 +2,12 @@
 
 Graph_info::Graph_info()
 {
-    set_equation("X");
+    set_equation("X^2");
     set_points(11);
-    set_window_dimensions(1125, 800);
-    set_origin(555, 405);
+    set_window_dimensions(1120, 800);
+    set_origin(560, 400);
     set_scale(1, 1);
-    set_domain(-10, 10);
+    set_domain(-5, 5);
 }
 
 void Graph_info::set_equation(const string &equation)

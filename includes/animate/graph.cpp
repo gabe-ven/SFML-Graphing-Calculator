@@ -8,35 +8,45 @@ Graph::Graph(Graph_info *info) : _plotter(info) // pass info to plotter to fill 
 
 void Graph::set_info()
 {
-    _points = _plotter();
+    _points = _plotter(); // pass points to plotter
 }
 
 void Graph::update(Graph_info *info)
 {
     _info = info;
-    _plotter.set_info(info);
-    _points = _plotter();
+    _plotter.set_info(info); // pass new info into plot object
+    set_info();
 }
 
-void Graph::Draw(sf::RenderWindow &window)
+void Graph::create_axes(sf::RenderWindow &window)
 {
+    sf::Vector2f domain = _info->get_domain();
+    sf::Vector2f origin = _info->get_origin();
+    sf::Vector2f window_dimensions = _info->get_window_dimensions();
+
     // create x-axis
-    sf::RectangleShape x_axis(sf::Vector2f(1200, 1));
-    x_axis.setPosition(0, 400);
+    sf::RectangleShape x_axis(sf::Vector2f(window_dimensions.x, 1));
+    x_axis.setPosition(0, origin.y);
     x_axis.setFillColor(sf::Color(229, 229, 229));
     window.draw(x_axis);
 
     // create y-axis
-    sf::RectangleShape y_axis(sf::Vector2f(1, 800));
-    y_axis.setPosition(550, 0);
+    sf::RectangleShape y_axis(sf::Vector2f(1, window_dimensions.y));
+    y_axis.setPosition(origin.x, 0);
     y_axis.setFillColor(sf::Color(229, 229, 229));
     window.draw(y_axis);
+}
+
+void Graph::Draw(sf::RenderWindow &window)
+{
+
+    create_axes(window);
 
     // draw each point onto graph
     for (int i = 0; i < _points.size(); i++)
     {
         sf::CircleShape point(1.5);
-        point.setPosition(_points[i].x - 5, _points[i].y - 5);
+        point.setPosition(_points[i].x, _points[i].y);
         point.setFillColor(sf::Color::Green);
         window.draw(point);
     }

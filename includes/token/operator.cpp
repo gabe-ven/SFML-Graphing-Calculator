@@ -48,6 +48,6 @@ double Operator::get_val()
     }
     else if (_op == '^')
     {
-        return 2;
+        return 3;
     }
 }

@@ -5,10 +5,12 @@
 #include <iostream>
 #include <vector>
 
+// g++ includes/animate/animate.cpp includes/animate/sidebar.cpp includes/animate/system.cpp includes/animate/random.cpp includes/animate/graph.cpp includes/animate/graph_info.cpp includes/animate/plot.cpp includes/token/operator.cpp includes/token/function.cpp includes/shunting_yard/shunting_yard.cpp includes/rpn/rpn.cpp main.cpp includes/animate/coord_translator.cpp includes/tokenizer/tokenizer.cpp  -I/opt/homebrew/Cellar/sfml/2.6.1/include -o prog -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system
+
 System::System(Graph_info *info) : _g(info) // pass info to graph
 {
     _info = info;
-    inputActive = false;
+    inputOn = false;
     set_info(info);
 }
 
@@ -20,34 +22,79 @@ void System::set_info(Graph_info *info)
 
 void System::Step(int command, Graph_info *info)
 {
-    if (command == 4)
-    {
-    }
-    else if (command == 6)
-    {
-    }
-    else if (command == 7) // input box
-    {
-        inputActive = !inputActive;
+    _info = info;
+    sf::Vector2f origin = _info->get_origin();
+    sf::Vector2f domain = _info->get_domain();
+    sf::Vector2f window_dimensions = _info->get_window_dimensions();
 
-        if (inputActive)
+    if (command == 3) // reset
+    {
+        _info->set_origin(560, 400);
+        _info->set_domain(-5, 5);
+    }
+    else if (command == 4 || command == 5) // pan left / right
+    {
+        double shift = 10;
+
+        double domain_range = domain.y - domain.x;
+
+        double domain_shift = (domain_range / window_dimensions.x) * shift;
+
+        if (command == 4) // pan left
+        {
+            _info->set_origin(origin.x - shift, origin.y);
+            _info->set_domain(domain.x + domain_shift, domain.y + domain_shift);
+        }
+        else if (command == 5) // pan right
+        {
+            _info->set_origin(origin.x + shift, origin.y);
+            _info->set_domain(domain.x - domain_shift, domain.y - domain_shift);
+        }
+    }
+
+    else if (command == 6) // input box
+    {
+        inputOn = !inputOn; // switch input
+
+        if (inputOn)
         {
             createInputBox();
         }
     }
-    else if (command == 8) // zoom in
+    if (command == 7 || command == 8) // zoom in / out
     {
-        sf::Vector2f domain = info->get_domain();
-        if (domain.y - domain.x > 10)
+        double zoom_factor;
+
+        if (command == 7) // zoom in
         {
-            info->set_domain(domain.x + 5, domain.y - 5);
+            zoom_factor = 0.9;
         }
+        else if (command == 8) // zoom out
+        {
+            zoom_factor = 1.1;
+        }
+
+        double graph_center = (domain.x + domain.y) / 2;
+
+        double domain_range = domain.y - domain.x;
+        double new_domain_range = domain_range * zoom_factor;
+
+        double new_domain_start = graph_center - new_domain_range / 2;
+        double new_domain_end = graph_center + new_domain_range / 2;
+
+        _info->set_domain(new_domain_start, new_domain_end);
+
+        double screen_center_x = window_dimensions.x / 2;
+        double screen_center_y = window_dimensions.y / 2;
+
+        double new_origin_x = origin.x + (screen_center_x - origin.x) * (zoom_factor - 1);
+        double new_origin_y = origin.y + (screen_center_y - origin.y) * (zoom_factor - 1);
+
+        cout << "NEW ORIGIN: " << new_origin_x << endl;
+
+        _info->set_origin(new_origin_x, new_origin_y);
     }
-    else if (command == 9) // zoom out
-    {
-        sf::Vector2f domain = info->get_domain();
-        info->set_domain(domain.x - 5, domain.y + 5);
-    }
+
     _g.update(info);
 }
 
@@ -57,22 +104,22 @@ void System::Draw(sf::RenderWindow &window)
 {
     _g.Draw(window);
 
-    if (inputActive)
+    if (inputOn)
     {
         window.draw(inputBox);
         window.draw(inputText);
     }
 }
 
-void System::HandleInput(sf::Event event)
+void System::Input(sf::Event event)
 {
-    if (inputActive && event.type == sf::Event::TextEntered)
+    if (inputOn && event.type == sf::Event::TextEntered)
     {
         string currentString = inputText.getString();
 
         if (event.text.unicode < 128)
         {
-            if (event.text.unicode == 8) // delete
+            if (event.text.unicode == 8) // delete key
             {
                 if (currentString.length() > 4) // length is greater than "y = "
                 {
@@ -84,11 +131,11 @@ void System::HandleInput(sf::Event event)
             {
                 if (currentString.length() < 4)
                 {
-                    currentString = "y = " + (char)event.text.unicode;
+                    currentString = "y = " + event.text.unicode;
                 }
                 else
                 {
-                    currentString += (char)event.text.unicode;
+                    currentString += event.text.unicode;
                 }
                 inputText.setString(currentString);
             }
@@ -96,16 +143,15 @@ void System::HandleInput(sf::Event event)
     }
     if (event.type == sf::Event::KeyPressed)
     {
-        if (event.key.code == sf::Keyboard::Enter)
+        if (event.key.code == sf::Keyboard::Enter) // this marks submitting the function
         {
             string equation = inputText.getString();
-            equation = equation.substr(4);
+            equation = equation.substr(4); // after the "y = "
 
-            _info->set_equation(equation);
+            _info->set_equation(equation); // set new equation
 
-            _g.update(_info);
-
-            inputActive = false;
+            _g.update(_info); // update info
+            inputOn = false;
         }
     }
 }
