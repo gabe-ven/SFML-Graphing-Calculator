@@ -24,7 +24,7 @@ animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info)
     mouseIn = true;
 
     mousePoint = sf::CircleShape();
-    mousePoint.setRadius(5.0);
+    mousePoint.setRadius(2.0);
     mousePoint.setFillColor(sf::Color::Red);
 
     cout << "Geme CTOR. preparing to load the font." << endl;

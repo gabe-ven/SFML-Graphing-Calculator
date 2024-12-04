@@ -27,16 +27,16 @@ void System::Step(int command, Graph_info *info)
     sf::Vector2f domain = _info->get_domain();
     sf::Vector2f window_dimensions = _info->get_window_dimensions();
 
-    if (command == 3) // reset
+    double domain_range = domain.y - domain.x;
+
+    if (command == 3.0) // reset
     {
         _info->set_origin(560, 400);
         _info->set_domain(-5, 5);
     }
     else if (command == 4 || command == 5) // pan left / right
     {
-        double shift = 10;
-
-        double domain_range = domain.y - domain.x;
+        double shift = 10.0;
 
         double domain_shift = (domain_range / window_dimensions.x) * shift;
 
@@ -67,30 +67,26 @@ void System::Step(int command, Graph_info *info)
 
         if (command == 7) // zoom in
         {
-            zoom_factor = 0.9;
+            zoom_factor = 0.95;
         }
         else if (command == 8) // zoom out
         {
-            zoom_factor = 1.1;
+            zoom_factor = 1.05;
         }
 
-        double graph_center = (domain.x + domain.y) / 2;
-
-        double domain_range = domain.y - domain.x;
+        double graph_center = (domain.x + domain.y) / 2.0;
         double new_domain_range = domain_range * zoom_factor;
 
-        double new_domain_start = graph_center - new_domain_range / 2;
-        double new_domain_end = graph_center + new_domain_range / 2;
+        double new_domain_start = graph_center - new_domain_range / 2.0;
+        double new_domain_end = graph_center + new_domain_range / 2.0;
 
         _info->set_domain(new_domain_start, new_domain_end);
 
-        double screen_center_x = window_dimensions.x / 2;
-        double screen_center_y = window_dimensions.y / 2;
+        double screen_center_x = window_dimensions.x / 2.0;
+        double screen_center_y = window_dimensions.y / 2.0;
 
-        double new_origin_x = origin.x + (screen_center_x - origin.x) * (zoom_factor - 1);
-        double new_origin_y = origin.y + (screen_center_y - origin.y) * (zoom_factor - 1);
-
-        cout << "NEW ORIGIN: " << new_origin_x << endl;
+        double new_origin_x = origin.x + (screen_center_x - origin.x) * (((zoom_factor) * 0.9975) - 1.0);
+        double new_origin_y = origin.y + (screen_center_y - origin.y) * (zoom_factor - 1.0);
 
         _info->set_origin(new_origin_x, new_origin_y);
     }

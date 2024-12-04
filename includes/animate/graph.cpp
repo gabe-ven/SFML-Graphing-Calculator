@@ -20,7 +20,6 @@ void Graph::update(Graph_info *info)
 
 void Graph::create_axes(sf::RenderWindow &window)
 {
-    sf::Vector2f domain = _info->get_domain();
     sf::Vector2f origin = _info->get_origin();
     sf::Vector2f window_dimensions = _info->get_window_dimensions();
 

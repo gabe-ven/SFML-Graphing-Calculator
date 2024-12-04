@@ -26,6 +26,7 @@ public:
 private:
     string _equation;
     int _points; // # of points
+    double _zoom;
     sf::Vector2f _window_dimensions;
     sf::Vector2f _origin; // graph's (0,0) in screen coords
     sf::Vector2f _scale;

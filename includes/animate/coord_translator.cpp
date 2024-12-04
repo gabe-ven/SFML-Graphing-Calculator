@@ -15,9 +15,9 @@ sf::Vector2f CoordTranslator::translate(sf::Vector2f point)
     double scale_x = window_dimensions.x / (domain.y - domain.x);
     double scale_y = window_dimensions.y / (domain.y - domain.x);
 
-    double screen_x = (point.x - domain.x) * scale_x + origin.x;
+    double screen_x = (point.x - domain.x) * scale_x;
 
-    double screen_y = window_dimensions.y / 2 - (point.y * scale_y) + origin.y;
+    double screen_y = window_dimensions.y / 2 - (point.y * scale_y);
 
     return sf::Vector2f(screen_x, screen_y);
 }
