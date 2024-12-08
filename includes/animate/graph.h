@@ -14,6 +14,7 @@ public:
     void set_info();
     void update(Graph_info *info);
     void create_axes(sf::RenderWindow &window);
+    void create_grid(sf::RenderWindow &window);
     void Draw(sf::RenderWindow &window); // draw x & y axis and the points on screen
 
 private:

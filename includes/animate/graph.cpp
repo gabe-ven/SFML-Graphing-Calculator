@@ -21,6 +21,7 @@ void Graph::update(Graph_info *info)
 void Graph::create_axes(sf::RenderWindow &window)
 {
     sf::Vector2f origin = _info->get_origin();
+    sf::Vector2f domain = _info->get_domain();
     sf::Vector2f window_dimensions = _info->get_window_dimensions();
 
     // create x-axis
@@ -36,9 +37,41 @@ void Graph::create_axes(sf::RenderWindow &window)
     window.draw(y_axis);
 }
 
+void Graph::create_grid(sf::RenderWindow &window)
+{
+
+    sf::Vector2f window_dimensions = _info->get_window_dimensions();
+    sf::Vector2f domain = _info->get_domain();
+    sf::Vector2f origin = _info->get_origin();
+
+    double x_spacing = window_dimensions.x / (domain.y - domain.x);
+    double y_spacing = window_dimensions.y / (domain.y - domain.x);
+
+    x_spacing /= window_dimensions.x / window_dimensions.y;
+
+    for (double x = domain.x; x <= domain.y; x++)
+    {
+        double x_position = x_spacing * origin.x + x;
+        sf::RectangleShape vertical_line(sf::Vector2f(1, window_dimensions.y));
+        vertical_line.setPosition(x_position, 0);
+        vertical_line.setFillColor(sf::Color(200, 200, 200));
+        window.draw(vertical_line);
+    }
+
+    for (double y = domain.y; y <= domain.y; y++)
+    {
+        double y_position = y_spacing * origin.y + y;
+        sf::RectangleShape horizontal_line(sf::Vector2f(window_dimensions.x, 1));
+        horizontal_line.setPosition(0, y_position);
+        horizontal_line.setFillColor(sf::Color(200, 200, 200));
+        window.draw(horizontal_line);
+    }
+}
+
 void Graph::Draw(sf::RenderWindow &window)
 {
 
+    create_grid(window);
     create_axes(window);
 
     // draw each point onto graph

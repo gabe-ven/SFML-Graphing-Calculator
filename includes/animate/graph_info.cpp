@@ -2,10 +2,10 @@
 
 Graph_info::Graph_info()
 {
-    set_equation("X^2");
+    set_equation("0");
     set_points(11);
-    set_window_dimensions(1120, 800);
-    set_origin(560, 400);
+    set_window_dimensions(WORK_PANEL, SCREEN_HEIGHT);
+    set_origin(WORK_PANEL / 2, SCREEN_HEIGHT / 2);
     set_scale(1, 1);
     set_domain(-5, 5);
 }

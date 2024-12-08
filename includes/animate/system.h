@@ -1,12 +1,18 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 #include <vector>
+#include <iostream>
+#include <fstream>
 #include "graph.h"
 #include "graph_info.h"
 #include "coord_translator.h"
+#include "random.h"
+#include "constants.h"
+
 #include <SFML/Graphics.hpp>
 
 using namespace std;
+
 class System
 {
 public:
@@ -16,6 +22,7 @@ public:
     void Draw(sf::RenderWindow &window);      // Calls graph::draw()
     void Input(sf::Event event);
     void createInputBox();
+    void saveToFile(const string &equation);
 
 private:
     Graph _g;

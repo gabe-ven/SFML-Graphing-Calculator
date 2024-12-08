@@ -3,49 +3,101 @@
 Queue<Token *> Tokenizer::tokenize(const string &equation)
 {
     Queue<Token *> infix;
+    bool unary = true;
+
     for (int i = 0; i < equation.size(); i++)
     {
         char ch = equation[i];
-        if (isspace(ch)) // skip blanks
-        {
+        if (isspace(ch)) // skip spaces
             continue;
-        }
-        if (isdigit(ch)) // integers
+
+        if (isdigit(ch)) // numbers
         {
-            infix.push(new Integer(string(1, ch)));
-        }
-        else if (isalpha(ch)) // chars (sin, cos, X, ...)
-        {
-            string func = "";
-            while (i < equation.size() && isalpha(equation[i])) // get every char in the string
+            string num = "";
+            while (i < equation.size() && (isdigit(equation[i]) || equation[i] == '.'))
             {
-                func += equation[i++];
+                num += equation[i++];
             }
             i--;
 
-            if (func == "X" || func == "x")
+            infix.push(new Integer(num));
+            unary = false;
+        }
+        else if (isalpha(ch)) // variables or functions
+        {
+            string func = "";
+
+            if (ch == 'x' || ch == 'X')
             {
-                infix.push(new Variable(func));
+                infix.push(new Variable("X"));
+                i++;
+
+                if (i < equation.size() && equation[i] == '^')
+                {
+                    infix.push(new Operator("^"));
+                    i++;
+                    string num = "";
+                    while (i < equation.size() && isdigit(equation[i]))
+                    {
+                        num += equation[i++];
+                    }
+                    i--;
+                    infix.push(new Integer(num));
+                }
+                else if (i < equation.size() && isalpha(equation[i]))
+                {
+                    while (i < equation.size() && isalpha(equation[i]))
+                    {
+                        func += equation[i++];
+                    }
+                    i--;
+
+                    infix.push(new Operator("*"));
+                    infix.push(new Function(func));
+                }
             }
             else
             {
-                infix.push(new Function(func));
+                while (i < equation.size() && isalpha(equation[i]))
+                {
+                    func += equation[i++];
+                }
+                i--;
+
+                if (func == "x" || func == "X") // var x
+                {
+                    infix.push(new Variable(func));
+                }
+                else // function (e.g., sin, cos)
+                {
+                    infix.push(new Function(func));
+                }
             }
+            unary = false;
         }
-        else
+
+        else if (ch == '(') // left paren
         {
-            if (ch == '(') // left paren
+            infix.push(new LeftParen());
+            unary = true;
+        }
+        else if (ch == ')') // right paren
+        {
+            infix.push(new RightParen());
+            unary = false;
+        }
+        else if (ch == '+' || ch == '*' || ch == '/' || ch == '^') // operators
+        {
+            if (ch == '-' && unary) // unary
             {
-                infix.push(new LeftParen());
+                infix.push(new Integer("-1"));
+                infix.push(new Operator("*"));
             }
-            else if (ch == ')') // right paren
-            {
-                infix.push(new RightParen());
-            }
-            else // operator
+            else
             {
                 infix.push(new Operator(string(1, ch)));
             }
+            unary = false;
         }
     }
 

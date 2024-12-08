@@ -5,6 +5,8 @@
 #include "graph_info.h"
 #include "sidebar.h"
 #include "coord_translator.h"
+#include "history.h"
+
 class animate
 {
 public:
@@ -24,6 +26,7 @@ private:
     sf::Text myTextLabel;       // text to draw on main screen
     bool mouseIn;               // mouse is in the screen
     Sidebar sidebar;            // rectangular message sidebar
+    History history;
     bool tabPressed;
 
     Graph_info *_info;

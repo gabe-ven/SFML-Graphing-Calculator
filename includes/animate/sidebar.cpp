@@ -49,7 +49,6 @@ Sidebar::Sidebar(float left, float width) : _left(left), _width(width)
     ////this is how you would position text on screen:
     // sb_text.setPosition(sf::Vector2f(10, SCREEN_HEIGHT-sb_text.getLocalBounds().height-5));
 
-    items.push_back("sidebar sample text");
     // Fill the items vector with empty strings so that we can use [] to read them:
     for (int i = 0; i < 30; i++)
     {
@@ -69,22 +68,17 @@ void Sidebar::draw(sf::RenderWindow &window)
     for (vector<string>::iterator it = items.begin();
          it != items.end(); it++)
     {
-        bool blank = false;
-        if (it->length() == 0)
+        if (it->empty())
         {
-            // empty rows must be taken into account (getLocalBounds())
-            //     but not drawn
-            blank = true;
-            sb_text.setString("BLANK");
+            continue;
         }
-        else
-        {
-            sb_text.setString(it->c_str());
-        }
+
+        sb_text.setString(it->c_str());
         sb_text.setPosition(sf::Vector2f(_left + LEFT_MARGIN, height));
+        sb_text.setOutlineColor(sf::Color::Green);
+        sb_text.setOutlineThickness(0.5);
         height += sb_text.getLocalBounds().height + VERTICAL_LINE_SPACING;
-        if (!blank)
-            window.draw(sb_text);
+        window.draw(sb_text);
     }
 }
 

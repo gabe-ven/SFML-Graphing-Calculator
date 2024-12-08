@@ -4,7 +4,7 @@
 using namespace std;
 #include "system.h"
 
-animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info), _info(info)
+animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info), _info(info), history()
 
 {
     tabPressed = false;
@@ -19,7 +19,7 @@ animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info)
     //   of objects created by the animate object.
     //   animate will
     system = System(info);
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(240);
 
     mouseIn = true;
 
@@ -50,6 +50,8 @@ animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info)
     myTextLabel.setFillColor(sf::Color::Green);
     myTextLabel.setPosition(sf::Vector2f(10, SCREEN_HEIGHT - myTextLabel.getLocalBounds().height - 5));
     cout << "animate instantiated successfully." << endl;
+
+    history.loadEquations();
 }
 
 void animate::Draw()
@@ -62,6 +64,7 @@ void animate::Draw()
     }
 
     sidebar.draw(window);
+    history.draw(window);
 
     //- - - - - - - - - - - - - - - - - - -
     // getPosition() gives you screen coords, getPosition(window) gives you window coords
@@ -137,8 +140,8 @@ void animate::processEvents()
                 if (tabPressed)
                 {
                     sidebar[SB_KEY_PRESSED] = "ENTER";
+                    history.addHistory(_info->get_equation());
                     tabPressed = false;
-                    render();
                 }
                 break;
             case sf::Keyboard::Period:
@@ -176,6 +179,18 @@ void animate::processEvents()
             {
                 sidebar[SB_MOUSE_CLICKED] = "LEFT CLICK " +
                                             mouse_pos_string(window);
+
+                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                for (int i = 0; i < history.getEquationBoxes().size(); ++i)
+                {
+                    sf::RectangleShape &box = history.getEquationBoxes()[i];
+                    if (box.getGlobalBounds().contains(mousePos.x, mousePos.y))
+                    {
+                        string equation = history[i];
+                        _info->set_equation(equation);
+                        break;
+                    }
+                }
             }
             break;
 

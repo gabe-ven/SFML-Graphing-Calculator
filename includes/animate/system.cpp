@@ -1,9 +1,4 @@
 #include "system.h"
-#include "random.h"
-#include "constants.h"
-#include "graph_info.h"
-#include <iostream>
-#include <vector>
 
 // g++ includes/animate/animate.cpp includes/animate/sidebar.cpp includes/animate/system.cpp includes/animate/random.cpp includes/animate/graph.cpp includes/animate/graph_info.cpp includes/animate/plot.cpp includes/token/operator.cpp includes/token/function.cpp includes/shunting_yard/shunting_yard.cpp includes/rpn/rpn.cpp main.cpp includes/animate/coord_translator.cpp includes/tokenizer/tokenizer.cpp  -I/opt/homebrew/Cellar/sfml/2.6.1/include -o prog -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system
 
@@ -31,24 +26,24 @@ void System::Step(int command, Graph_info *info)
 
     if (command == 3.0) // reset
     {
-        _info->set_origin(560, 400);
+        _info->set_origin(WORK_PANEL / 2, SCREEN_HEIGHT / 2);
         _info->set_domain(-5, 5);
     }
     else if (command == 4 || command == 5) // pan left / right
     {
-        double shift = 10.0;
+        double shift = 20.0;
 
         double domain_shift = (domain_range / window_dimensions.x) * shift;
 
         if (command == 4) // pan left
         {
-            _info->set_origin(origin.x - shift, origin.y);
-            _info->set_domain(domain.x + domain_shift, domain.y + domain_shift);
+            _info->set_origin(origin.x + shift, origin.y);
+            _info->set_domain(domain.x - domain_shift, domain.y - domain_shift);
         }
         else if (command == 5) // pan right
         {
-            _info->set_origin(origin.x + shift, origin.y);
-            _info->set_domain(domain.x - domain_shift, domain.y - domain_shift);
+            _info->set_origin(origin.x - shift, origin.y);
+            _info->set_domain(domain.x + domain_shift, domain.y + domain_shift);
         }
     }
 
@@ -148,6 +143,8 @@ void System::Input(sf::Event event)
 
             _g.update(_info); // update info
             inputOn = false;
+
+            saveToFile(equation); // write equation to file
         }
     }
 }
@@ -158,15 +155,28 @@ void System::createInputBox()
         cerr << "Error loading font!" << endl;
     }
 
-    inputBox.setSize(sf::Vector2f(300, 30));
+    inputBox.setSize(sf::Vector2f(300, 40));
     inputBox.setFillColor(sf::Color(40, 40, 40));
-    inputBox.setPosition(400, 40);
+    inputBox.setPosition(420, 50);
     inputBox.setOutlineColor(sf::Color::Green);
     inputBox.setOutlineThickness(2);
 
     inputText.setFont(font);
-    inputText.setCharacterSize(20);
+    inputText.setCharacterSize(25);
     inputText.setFillColor(sf::Color::Green);
-    inputText.setPosition(inputBox.getPosition().x + 10, inputBox.getPosition().y);
+    inputText.setPosition(inputBox.getPosition().x + 10, inputBox.getPosition().y + 5);
     inputText.setString("y = ");
+}
+
+void System::saveToFile(const string &equation)
+{
+    ofstream file("functions.txt", ios::app);
+
+    if (!file.is_open())
+    {
+        return;
+    }
+
+    file << equation << endl;
+    file.close();
 }

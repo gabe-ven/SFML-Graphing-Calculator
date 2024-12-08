@@ -1,6 +1,7 @@
 #ifndef GRAPH_INFO_H
 #define GRAPH_INFO_H
 #include <vector>
+#include "constants.h"
 #include <SFML/Graphics.hpp>
 
 using namespace std;

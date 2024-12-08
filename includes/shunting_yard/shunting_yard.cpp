@@ -3,13 +3,7 @@
 
 Queue<Token *> ShuntingYard::postfix(Queue<Token *> input_q)
 {
-    // given 3 * 5
-    // make 3 5 *
-    // 1. put 3 in postfix queue
-    // 2. put * in stack
-    // 3. put 5 in postfix queue
-    // now infix queue is empty
-    // now bring pop operator stack and push in postfix queue
+
     Queue<Token *> postfix_q;
     Stack<Token *> operators;
 
