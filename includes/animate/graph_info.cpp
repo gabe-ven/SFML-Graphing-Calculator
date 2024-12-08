@@ -8,6 +8,7 @@ Graph_info::Graph_info()
     set_origin(WORK_PANEL / 2, SCREEN_HEIGHT / 2);
     set_scale(1, 1);
     set_domain(-5, 5);
+    set_polar(false);
 }
 
 void Graph_info::set_equation(const string &equation)
@@ -39,6 +40,10 @@ void Graph_info::set_domain(double x_min, double x_max)
 {
     _domain = sf::Vector2f(x_min, x_max);
 }
+void Graph_info::set_polar(bool isPolar)
+{
+    _isPolar = isPolar;
+}
 
 string Graph_info::get_equation() const
 {
@@ -68,4 +73,8 @@ sf::Vector2f Graph_info::get_scale() const
 sf::Vector2f Graph_info::get_domain() const
 {
     return _domain;
+}
+bool Graph_info::get_polar()
+{
+    return _isPolar;
 }

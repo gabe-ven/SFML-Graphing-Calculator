@@ -49,6 +49,13 @@ animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info)
     myTextLabel.setStyle(sf::Text::Bold);
     myTextLabel.setFillColor(sf::Color::Green);
     myTextLabel.setPosition(sf::Vector2f(10, SCREEN_HEIGHT - myTextLabel.getLocalBounds().height - 5));
+
+    invalidMessage = sf::Text("", font);
+    invalidMessage.setCharacterSize(20);
+    invalidMessage.setStyle(sf::Text::Bold);
+    invalidMessage.setFillColor(sf::Color::Red);
+    invalidMessage.setPosition(sf::Vector2f(1185, 750));
+
     cout << "animate instantiated successfully." << endl;
 
     history.loadEquations();
@@ -74,6 +81,7 @@ void animate::Draw()
     // drawing Test: . . . . . . . . . . . .
     // This is how you draw text:)
     window.draw(myTextLabel);
+    window.draw(invalidMessage);
     //. . . . . . . . . . . . . . . . . . .
 }
 
@@ -121,41 +129,74 @@ void animate::processEvents()
             {
             case sf::Keyboard::R:
                 sidebar[SB_KEY_PRESSED] = "RESET";
-                command = 3;
+                command = 1;
                 break;
             case sf::Keyboard::Left:
                 sidebar[SB_KEY_PRESSED] = "PAN LEFT";
-                command = 4;
+                command = 2;
                 break;
             case sf::Keyboard::Right:
                 sidebar[SB_KEY_PRESSED] = "PAN RIGHT";
+                command = 3;
+                break;
+            case sf::Keyboard::Up:
+                sidebar[SB_KEY_PRESSED] = "PAN UP";
+                command = 4;
+                break;
+            case sf::Keyboard::Down:
+                sidebar[SB_KEY_PRESSED] = "PAN DOWN";
                 command = 5;
                 break;
-            case sf::Keyboard::Tab:
-                sidebar[SB_KEY_PRESSED] = "TAB";
+            case sf::Keyboard::Period:
+                sidebar[SB_KEY_PRESSED] = "ZOOM IN";
                 command = 6;
+                break;
+
+            case sf::Keyboard::Comma:
+                sidebar[SB_KEY_PRESSED] = "ZOOM OUT";
+                command = 7;
+                break;
+            case sf::Keyboard::Tab:
+                sidebar[SB_KEY_PRESSED] = "INPUT";
+                command = 8;
                 tabPressed = true;
+                break;
+            case sf::Keyboard::P:
+                sidebar[SB_KEY_PRESSED] = "POLAR";
+                command = 9;
                 break;
             case sf::Keyboard::Enter:
                 if (tabPressed)
                 {
                     sidebar[SB_KEY_PRESSED] = "ENTER";
-                    history.addHistory(_info->get_equation());
+                    string equation = _info->get_equation();
+
+                    if (equation == "0")
+                    {
+                        invalidMessage.setString("INVALID INPUT");
+                        tabPressed = false;
+                        return;
+                    }
+
+                    Tokenizer tokenizer;
+                    tokenizer.tokenize(equation);
+                    if (!tokenizer.invalid())
+                    {
+                        history.addHistory(equation);
+                        invalidMessage.setString("");
+                    }
+                    else
+                    {
+                        invalidMessage.setString("INVALID INPUT");
+                    }
+
                     tabPressed = false;
                 }
-                break;
-            case sf::Keyboard::Period:
-                sidebar[SB_KEY_PRESSED] = "ZOOM IN";
-                command = 7;
-                break;
-
-            case sf::Keyboard::Comma:
-                sidebar[SB_KEY_PRESSED] = "ZOOM OUT";
-                command = 8;
                 break;
             }
 
             break;
+
         case sf::Event::MouseEntered:
             mouseIn = true;
             break;

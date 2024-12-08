@@ -16,6 +16,7 @@ public:
     void set_origin(double x, double y);
     void set_scale(double x_scale, double y_scale);
     void set_domain(double x_min, double x_max);
+    void set_polar(bool _isPolar);
 
     string get_equation() const;
     int get_points() const;
@@ -23,11 +24,13 @@ public:
     sf::Vector2f get_origin() const;
     sf::Vector2f get_scale() const;
     sf::Vector2f get_domain() const;
+    bool get_polar();
 
 private:
     string _equation;
     int _points; // # of points
     double _zoom;
+    bool _isPolar;
     sf::Vector2f _window_dimensions;
     sf::Vector2f _origin; // graph's (0,0) in screen coords
     sf::Vector2f _scale;

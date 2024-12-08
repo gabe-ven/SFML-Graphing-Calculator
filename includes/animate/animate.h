@@ -4,8 +4,8 @@
 #include "system.h"
 #include "graph_info.h"
 #include "sidebar.h"
-#include "coord_translator.h"
 #include "history.h"
+#include "../../includes/tokenizer/tokenizer.h"
 
 class animate
 {
@@ -24,6 +24,7 @@ private:
     int command;                // command to send to system
     sf::Font font;              // font to draw on main screen
     sf::Text myTextLabel;       // text to draw on main screen
+    sf::Text invalidMessage;    // invalid text
     bool mouseIn;               // mouse is in the screen
     Sidebar sidebar;            // rectangular message sidebar
     History history;

@@ -8,6 +8,7 @@
 #include "coord_translator.h"
 #include "random.h"
 #include "constants.h"
+#include "../../includes/tokenizer/tokenizer.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -33,6 +34,7 @@ private:
     sf::Font font;
     string userInput;
     bool inputOn;
+    bool isPolar;
 };
 
 #endif // SYSTEM_H

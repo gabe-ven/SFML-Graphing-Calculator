@@ -4,6 +4,7 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
 {
     Queue<Token *> infix;
     bool unary = true;
+    isInvalid = false;
 
     for (int i = 0; i < equation.size(); i++)
     {
@@ -68,9 +69,13 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
                 {
                     infix.push(new Variable(func));
                 }
-                else // function (e.g., sin, cos)
+                else if (func == "sin" || func == "cos" || func == "tan" || func == "log" || func == "e" || func == "ln")
                 {
                     infix.push(new Function(func));
+                }
+                else
+                {
+                    isInvalid = true;
                 }
             }
             unary = false;

@@ -2,11 +2,10 @@
 
 History::History()
 {
-    const double MARGIN = 5.0;
     const double HEIGHT = 500.0;
 
     _left = SCREEN_WIDTH * 4 / 5;
-    _width = SIDE_BAR - 2 * MARGIN;
+    _width = SIDE_BAR - 2;
 
     rect.setFillColor(sf::Color(50, 50, 50));
 
@@ -21,7 +20,7 @@ History::History()
     }
 
     equations.setFont(font);
-    equations.setCharacterSize(30);
+    equations.setCharacterSize(20);
     equations.setStyle(sf::Text::Bold);
     equations.setFillColor(sf::Color::Green);
     equations.setOutlineColor(sf::Color::Green);
@@ -71,15 +70,15 @@ void History::draw(sf::RenderWindow &window)
 
     window.draw(rect);
 
-    float height = 110;
+    float height = 105;
 
     for (vector<string>::iterator it = history.begin(); it != history.end(); ++it)
     {
         equations.setString(*it);
 
         sf::RectangleShape box;
-        box.setSize(sf::Vector2f(_width, BOX_HEIGHT));
-        box.setPosition(_left, height - 5);
+        box.setSize(sf::Vector2f(_width - 30, BOX_HEIGHT));
+        box.setPosition(_left + 15, height);
         box.setFillColor(sf::Color(44, 44, 44));
         box.setOutlineColor(sf::Color::Green);
         box.setOutlineThickness(2);
@@ -88,7 +87,7 @@ void History::draw(sf::RenderWindow &window)
 
         equationBoxes.push_back(box);
 
-        equations.setPosition(_left + 10, height);
+        equations.setPosition(_left + 20, height + 5);
 
         window.draw(equations);
 

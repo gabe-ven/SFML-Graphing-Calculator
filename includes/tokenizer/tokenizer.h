@@ -20,7 +20,12 @@ using namespace std;
 class Tokenizer
 {
 public:
+    Tokenizer() : isInvalid(false) {}
     Queue<Token *> tokenize(const string &equation);
+    bool invalid() { return isInvalid; }
+
+private:
+    bool isInvalid;
 };
 
 #endif

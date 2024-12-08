@@ -27,7 +27,7 @@ vector<sf::Vector2f> Plot::operator()()
     RPN rpn;
 
     sf::Vector2f domain = _info->get_domain();
-    int num_points = _info->get_points() * 800;
+    int num_points = _info->get_points() * 600;
     double increment = (domain.y - domain.x) / num_points;
 
     CoordTranslator translator(_info);

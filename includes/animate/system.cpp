@@ -6,6 +6,7 @@ System::System(Graph_info *info) : _g(info) // pass info to graph
 {
     _info = info;
     inputOn = false;
+    isPolar = false;
     set_info(info);
 }
 
@@ -24,47 +25,51 @@ void System::Step(int command, Graph_info *info)
 
     double domain_range = domain.y - domain.x;
 
-    if (command == 3.0) // reset
+    if (command == 1) // reset
     {
         _info->set_origin(WORK_PANEL / 2, SCREEN_HEIGHT / 2);
         _info->set_domain(-5, 5);
     }
-    else if (command == 4 || command == 5) // pan left / right
+    else if (command == 2 || command == 3) // pan left / right
     {
         double shift = 20.0;
 
         double domain_shift = (domain_range / window_dimensions.x) * shift;
 
-        if (command == 4) // pan left
+        if (command == 2) // pan left
         {
             _info->set_origin(origin.x + shift, origin.y);
             _info->set_domain(domain.x - domain_shift, domain.y - domain_shift);
         }
-        else if (command == 5) // pan right
+        else if (command == 3) // pan right
         {
             _info->set_origin(origin.x - shift, origin.y);
             _info->set_domain(domain.x + domain_shift, domain.y + domain_shift);
         }
     }
 
-    else if (command == 6) // input box
+    else if (command == 4 || command == 5) // pan up / down
     {
-        inputOn = !inputOn; // switch input
+        double shift = 20.0;
 
-        if (inputOn)
+        if (command == 4) // pan up
         {
-            createInputBox();
+            _info->set_origin(origin.x, origin.y - shift);
+        }
+        else if (command == 5) // pan down
+        {
+            _info->set_origin(origin.x, origin.y + shift);
         }
     }
-    if (command == 7 || command == 8) // zoom in / out
+    else if (command == 6 || command == 7) // zoom in / out
     {
         double zoom_factor;
 
-        if (command == 7) // zoom in
+        if (command == 6) // zoom in
         {
             zoom_factor = 0.95;
         }
-        else if (command == 8) // zoom out
+        else if (command == 7) // zoom out
         {
             zoom_factor = 1.05;
         }
@@ -84,6 +89,21 @@ void System::Step(int command, Graph_info *info)
         double new_origin_y = origin.y + (screen_center_y - origin.y) * (zoom_factor - 1.0);
 
         _info->set_origin(new_origin_x, new_origin_y);
+    }
+
+    else if (command == 8) // input box
+    {
+        inputOn = !inputOn; // switch input
+
+        if (inputOn)
+        {
+            createInputBox();
+        }
+    }
+    else if (command == 9) // toggle polar
+    {
+        isPolar = !isPolar;
+        _info->set_polar(isPolar);
     }
 
     _g.update(info);
@@ -139,12 +159,20 @@ void System::Input(sf::Event event)
             string equation = inputText.getString();
             equation = equation.substr(4); // after the "y = "
 
-            _info->set_equation(equation); // set new equation
+            Tokenizer tokenizer;
+            tokenizer.tokenize(equation);
 
-            _g.update(_info); // update info
+            if (!tokenizer.invalid())
+            {
+                _info->set_equation(equation); // set new equation
+                saveToFile(equation);          // write equation to file
+            }
+            else
+            {
+                _info->set_equation("0");
+            }
             inputOn = false;
-
-            saveToFile(equation); // write equation to file
+            _g.update(_info); // update info
         }
     }
 }
