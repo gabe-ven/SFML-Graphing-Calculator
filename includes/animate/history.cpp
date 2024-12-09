@@ -22,8 +22,8 @@ History::History()
     equations.setFont(font);
     equations.setCharacterSize(20);
     equations.setStyle(sf::Text::Bold);
-    equations.setFillColor(sf::Color::Green);
-    equations.setOutlineColor(sf::Color::Green);
+    equations.setFillColor(sf::Color(0, 225, 0));
+    equations.setOutlineColor(sf::Color(0, 225, 0));
     equations.setOutlineThickness(0.5);
 }
 
@@ -72,15 +72,20 @@ void History::draw(sf::RenderWindow &window)
 
     float height = 105;
 
-    for (vector<string>::iterator it = history.begin(); it != history.end(); ++it)
+    for (vector<string>::iterator it = history.begin(); it != history.end(); it++)
     {
+        if (it->empty())
+        {
+            continue;
+        }
+
         equations.setString(*it);
 
         sf::RectangleShape box;
         box.setSize(sf::Vector2f(_width - 30, BOX_HEIGHT));
         box.setPosition(_left + 15, height);
         box.setFillColor(sf::Color(44, 44, 44));
-        box.setOutlineColor(sf::Color::Green);
+        box.setOutlineColor(sf::Color(0, 225, 0));
         box.setOutlineThickness(2);
 
         window.draw(box);

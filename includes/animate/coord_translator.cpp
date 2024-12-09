@@ -8,6 +8,7 @@ CoordTranslator::CoordTranslator(Graph_info *info)
 sf::Vector2f CoordTranslator::translate(sf::Vector2f point)
 {
     sf::Vector2f domain = _info->get_domain();
+    sf::Vector2f origin = _info->get_origin();
     sf::Vector2f window_dimensions = _info->get_window_dimensions();
 
     double scale_x = window_dimensions.x / (domain.y - domain.x); // scale based on range of domain

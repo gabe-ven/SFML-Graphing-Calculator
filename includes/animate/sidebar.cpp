@@ -44,7 +44,7 @@ Sidebar::Sidebar(float left, float width) : _left(left), _width(width)
     sb_text.setFont(font);
     sb_text.setCharacterSize(20);
     sb_text.setStyle(sf::Text::Bold);
-    sb_text.setFillColor(sf::Color::Green);
+    sb_text.setFillColor(sf::Color(0, 225, 0));
 
     ////this is how you would position text on screen:
     // sb_text.setPosition(sf::Vector2f(10, SCREEN_HEIGHT-sb_text.getLocalBounds().height-5));
@@ -68,14 +68,10 @@ void Sidebar::draw(sf::RenderWindow &window)
     for (vector<string>::iterator it = items.begin();
          it != items.end(); it++)
     {
-        if (it->empty())
-        {
-            continue;
-        }
 
         sb_text.setString(it->c_str());
         sb_text.setPosition(sf::Vector2f(_left + LEFT_MARGIN, height));
-        sb_text.setOutlineColor(sf::Color::Green);
+        sb_text.setOutlineColor(sf::Color(0, 225, 0));
         sb_text.setOutlineThickness(0.5);
         height += sb_text.getLocalBounds().height + VERTICAL_LINE_SPACING;
         window.draw(sb_text);

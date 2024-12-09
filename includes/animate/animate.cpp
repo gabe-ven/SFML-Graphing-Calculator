@@ -47,7 +47,7 @@ animate::animate(Graph_info *info) : sidebar(WORK_PANEL, SIDE_BAR), system(info)
     myTextLabel = sf::Text("", font);
     myTextLabel.setCharacterSize(20);
     myTextLabel.setStyle(sf::Text::Bold);
-    myTextLabel.setFillColor(sf::Color::Green);
+    myTextLabel.setFillColor(sf::Color(0, 225, 0));
     myTextLabel.setPosition(sf::Vector2f(10, SCREEN_HEIGHT - myTextLabel.getLocalBounds().height - 5));
 
     invalidMessage = sf::Text("", font);

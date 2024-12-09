@@ -3,8 +3,8 @@
 Queue<Token *> Tokenizer::tokenize(const string &equation)
 {
     Queue<Token *> infix;
-    bool unary = true;
-    isInvalid = false;
+    bool unary = true; // flag for unary
+    isInvalid = false; // flag for invalid functions
 
     for (int i = 0; i < equation.size(); i++)
     {
@@ -15,6 +15,7 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
         if (isdigit(ch)) // numbers
         {
             string num = "";
+            // append all numbers
             while (i < equation.size() && (isdigit(equation[i]) || equation[i] == '.'))
             {
                 num += equation[i++];
@@ -33,11 +34,12 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
                 infix.push(new Variable("X"));
                 i++;
 
-                if (i < equation.size() && equation[i] == '^') // check exponents
+                if (i < equation.size() && equation[i] == '^') // check for exponent AFTER x
                 {
                     infix.push(new Operator("^"));
                     i++;
                     string num = "";
+                    // collect numbers for the exponent
                     while (i < equation.size() && isdigit(equation[i]))
                     {
                         num += equation[i++];
@@ -47,6 +49,7 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
                 }
                 else if (i < equation.size() && isalpha(equation[i]))
                 {
+                    // handle stuff like x * x and xsin(x)
                     while (i < equation.size() && isalpha(equation[i]))
                     {
                         func += equation[i++];
@@ -59,6 +62,7 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
             }
             else
             {
+                // collect functions like sin, cos
                 while (i < equation.size() && isalpha(equation[i]))
                 {
                     func += equation[i++];
@@ -69,12 +73,24 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
                 {
                     infix.push(new Variable(func));
                 }
-                else if (func == "sin" || func == "cos" || func == "tan" || func == "log" || func == "e" || func == "ln")
+                else if (func == "sin" ||  // sin
+                         func == "cos" ||  // cos
+                         func == "tan" ||  // tan
+                         func == "log" ||  // log
+                         func == "e" ||    // e
+                         func == "ln" ||   // ln
+                         func == "asin" || // asin
+                         func == "acos" || // acos
+                         func == "atan" || // atan
+                         func == "sinh" || // sinh
+                         func == "cosh" || // cosh
+                         func == "tanh")   // tanh
                 {
                     if (i + 1 < equation.size() && equation[i + 1] == '(') // check if function is followed by paren
                     {
                         infix.push(new Function(func));
                     }
+
                     else // dont add a function if there are no parentheses
                     {
                         isInvalid = true;
@@ -95,6 +111,10 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
         }
         else if (ch == ')') // right paren
         {
+            if (i == 0 || equation[i - 1] == '(')
+            {
+                isInvalid = true;
+            }
             infix.push(new RightParen());
             unary = false;
         }

@@ -56,7 +56,7 @@ void Graph::Draw(sf::RenderWindow &window)
     {
         sf::CircleShape point(1.5);
         point.setPosition(_points[i].x, _points[i].y);
-        point.setFillColor(sf::Color::Green);
+        point.setFillColor(sf::Color(0, 225, 0));
         window.draw(point);
     }
 }

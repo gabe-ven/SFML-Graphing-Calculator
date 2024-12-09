@@ -33,4 +33,28 @@ double Function::evaluate(double x)
     {
         return exp(x);
     }
+    else if (_func == "asin")
+    {
+        return asin(x);
+    }
+    else if (_func == "acos")
+    {
+        return acos(x);
+    }
+    else if (_func == "atan")
+    {
+        return atan(x);
+    }
+    else if (_func == "sinh")
+    {
+        return sinh(x);
+    }
+    else if (_func == "cosh")
+    {
+        return cosh(x);
+    }
+    else if (_func == "tanh")
+    {
+        return tanh(x);
+    }
 }

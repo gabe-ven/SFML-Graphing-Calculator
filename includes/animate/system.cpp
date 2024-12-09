@@ -73,21 +73,21 @@ void System::Step(int command, Graph_info *info)
             zoom_factor = 1.05;
         }
 
-        double graph_center = (domain.x + domain.y) / 2.0;
-        double new_domain_range = domain_range * zoom_factor;
+        double graph_center = (domain.x + domain.y) / 2.0;    // get graph midpoint
+        double new_domain_range = domain_range * zoom_factor; // update range with zoom factor
 
-        double new_domain_start = graph_center - new_domain_range / 2.0;
-        double new_domain_end = graph_center + new_domain_range / 2.0;
+        double new_domain_start = graph_center - new_domain_range / 2.0; // get the new domain start
+        double new_domain_end = graph_center + new_domain_range / 2.0;   // get the new domain end
 
-        _info->set_domain(new_domain_start, new_domain_end);
+        _info->set_domain(new_domain_start, new_domain_end); // update domain with zoom change
 
+        // get screen centers
         double screen_center_x = window_dimensions.x / 2.0;
         double screen_center_y = window_dimensions.y / 2.0;
 
-        double new_origin_x = origin.x + (screen_center_x - origin.x) * (((zoom_factor) * 0.9975) - 1.0);
-        double new_origin_y = origin.y + (screen_center_y - origin.y) * (zoom_factor - 1.0);
+        double new_origin_x = origin.x + (screen_center_x - origin.x) * (((zoom_factor) * 0.9975) - 1.0); // change horizontal origin
 
-        _info->set_origin(new_origin_x, new_origin_y);
+        _info->set_origin(new_origin_x, origin.y);
     }
 
     else if (command == 8) // input box
@@ -136,7 +136,7 @@ void System::Input(sf::Event event)
             {
                 if (currentString.length() > 4) // length is greater than "y = "
                 {
-                    currentString.pop_back();
+                    currentString.pop_back(); // delete the rest of the characters
                     inputText.setString(currentString);
                 }
             }
@@ -164,12 +164,12 @@ void System::Input(sf::Event event)
             Tokenizer tokenizer;
             tokenizer.tokenize(equation);
 
-            if (!tokenizer.invalid())
+            if (!tokenizer.invalid()) // check if equation is valid
             {
                 _info->set_equation(equation); // set new equation
                 saveToFile(equation);          // write equation to file
             }
-            else
+            else // set to default "0"
             {
                 _info->set_equation("0");
             }
@@ -188,25 +188,25 @@ void System::createInputBox()
     inputBox.setSize(sf::Vector2f(300, 40));
     inputBox.setFillColor(sf::Color(40, 40, 40));
     inputBox.setPosition(420, 50);
-    inputBox.setOutlineColor(sf::Color::Green);
+    inputBox.setOutlineColor(sf::Color(0, 225, 0));
     inputBox.setOutlineThickness(2);
 
     inputText.setFont(font);
     inputText.setCharacterSize(25);
-    inputText.setFillColor(sf::Color::Green);
+    inputText.setFillColor(sf::Color(0, 255, 0));
     inputText.setPosition(inputBox.getPosition().x + 10, inputBox.getPosition().y + 5);
     inputText.setString("y = ");
 }
 
 void System::saveToFile(const string &equation)
 {
-    ofstream file("functions.txt", ios::app);
+    ofstream file("functions.txt", ios::app); // open file
 
     if (!file.is_open())
     {
         return;
     }
 
-    file << equation << endl;
+    file << equation << endl; // save the function to file
     file.close();
 }
