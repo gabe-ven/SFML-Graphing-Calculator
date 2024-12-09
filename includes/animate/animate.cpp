@@ -165,6 +165,10 @@ void animate::processEvents()
                 sidebar[SB_KEY_PRESSED] = "POLAR";
                 command = 9;
                 break;
+            case sf::Keyboard::C:
+                sidebar[SB_KEY_PRESSED] = "CARTESIAN";
+                command = 10;
+                break;
             case sf::Keyboard::Enter:
                 if (tabPressed)
                 {

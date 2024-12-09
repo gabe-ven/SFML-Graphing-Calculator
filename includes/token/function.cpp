@@ -21,7 +21,7 @@ double Function::evaluate(double x)
     {
         return tan(x);
     }
-    else if (_func == "log")
+    else if (_func == "log" || _func == "ln")
     {
         return log(x);
     }

@@ -34,7 +34,6 @@ private:
     sf::Font font;
     string userInput;
     bool inputOn;
-    bool isPolar;
 };
 
 #endif // SYSTEM_H

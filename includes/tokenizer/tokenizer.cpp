@@ -33,7 +33,7 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
                 infix.push(new Variable("X"));
                 i++;
 
-                if (i < equation.size() && equation[i] == '^')
+                if (i < equation.size() && equation[i] == '^') // check exponents
                 {
                     infix.push(new Operator("^"));
                     i++;
@@ -71,7 +71,14 @@ Queue<Token *> Tokenizer::tokenize(const string &equation)
                 }
                 else if (func == "sin" || func == "cos" || func == "tan" || func == "log" || func == "e" || func == "ln")
                 {
-                    infix.push(new Function(func));
+                    if (i + 1 < equation.size() && equation[i + 1] == '(') // check if function is followed by paren
+                    {
+                        infix.push(new Function(func));
+                    }
+                    else // dont add a function if there are no parentheses
+                    {
+                        isInvalid = true;
+                    }
                 }
                 else
                 {

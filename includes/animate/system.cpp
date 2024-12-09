@@ -6,7 +6,6 @@ System::System(Graph_info *info) : _g(info) // pass info to graph
 {
     _info = info;
     inputOn = false;
-    isPolar = false;
     set_info(info);
 }
 
@@ -102,8 +101,11 @@ void System::Step(int command, Graph_info *info)
     }
     else if (command == 9) // toggle polar
     {
-        isPolar = !isPolar;
-        _info->set_polar(isPolar);
+        _info->set_polar(true);
+    }
+    else if (command == 10) // toggle cartesian
+    {
+        _info->set_polar(false);
     }
 
     _g.update(info);
