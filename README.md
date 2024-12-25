@@ -5,6 +5,8 @@
 ## Description:
 The SFML Graphing Calculator is a desktop application developed in C++ using the Simple and Fast Multimedia Library (SFML). Designed for visually plotting mathematical functions, this tool combines efficient computational capabilities with an interactive graphical interface.
 
+The calculator uses the shunting-yard algorithm to parse mathematical expressions, converting them into Reverse Polish Notation (RPN) for efficient evaluation. Key data structures like stacks, queues, and linked lists are used to manage operators, expressions, graph data, and history entries. These elements ensure smooth performance and precise computations, making it a versatile tool for math visualization.
+
 ## Key Features:
 - Function Plotting: Supports linear, quadratic, polynomial, trigonometric, and exponential functions, allowing users to graph equations like sin(x) and x^2.
 - Interactive Interface: Users can pan and zoom the graph with key controls, offering a seamless exploration of different scales and regions.
