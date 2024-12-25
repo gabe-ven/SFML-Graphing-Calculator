@@ -1,7 +1,5 @@
 # SFML Graphing Calculator
 
-## <ins> Gabriel Venezia </ins>
-
 ## Description:
 The SFML Graphing Calculator is a desktop application developed in C++ using the Simple and Fast Multimedia Library (SFML). Designed for visually plotting mathematical functions, this tool combines efficient computational capabilities with an interactive graphical interface.
 
