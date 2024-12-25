@@ -127,52 +127,41 @@ void animate::processEvents()
         case sf::Event::KeyPressed:
             switch (event.key.code)
             {
-            case sf::Keyboard::R:
-                sidebar[SB_KEY_PRESSED] = "RESET";
+            case sf::Keyboard::R: // reset
                 command = 1;
                 break;
-            case sf::Keyboard::Left:
-                sidebar[SB_KEY_PRESSED] = "PAN LEFT";
+            case sf::Keyboard::Left: // pan left
                 command = 2;
                 break;
-            case sf::Keyboard::Right:
-                sidebar[SB_KEY_PRESSED] = "PAN RIGHT";
+            case sf::Keyboard::Right: // pan right
                 command = 3;
                 break;
-            case sf::Keyboard::Up:
-                sidebar[SB_KEY_PRESSED] = "PAN UP";
+            case sf::Keyboard::Up: // pan up
                 command = 4;
                 break;
-            case sf::Keyboard::Down:
-                sidebar[SB_KEY_PRESSED] = "PAN DOWN";
+            case sf::Keyboard::Down: // pan down
                 command = 5;
                 break;
-            case sf::Keyboard::Period:
-                sidebar[SB_KEY_PRESSED] = "ZOOM IN";
+            case sf::Keyboard::Period: // zoom in
                 command = 6;
                 break;
 
-            case sf::Keyboard::Comma:
-                sidebar[SB_KEY_PRESSED] = "ZOOM OUT";
+            case sf::Keyboard::Comma: // zoom out
                 command = 7;
                 break;
-            case sf::Keyboard::Tab:
-                sidebar[SB_KEY_PRESSED] = "INPUT";
+            case sf::Keyboard::Tab: // input
                 command = 8;
                 tabPressed = true;
                 break;
-            case sf::Keyboard::P:
-                sidebar[SB_KEY_PRESSED] = "POLAR";
+            case sf::Keyboard::P: // polar
                 command = 9;
                 break;
-            case sf::Keyboard::C:
-                sidebar[SB_KEY_PRESSED] = "CARTESIAN";
+            case sf::Keyboard::C: // cartesian
                 command = 10;
                 break;
-            case sf::Keyboard::Enter:
+            case sf::Keyboard::Enter: // enter input
                 if (tabPressed)
                 {
-                    sidebar[SB_KEY_PRESSED] = "ENTER";
                     string equation = _info->get_equation();
 
                     if (equation == "0")
@@ -217,13 +206,10 @@ void animate::processEvents()
         case sf::Event::MouseButtonReleased:
             if (event.mouseButton.button == sf::Mouse::Right)
             {
-                sidebar[SB_MOUSE_CLICKED] = "RIGHT CLICK " +
-                                            mouse_pos_string(window);
+                continue;
             }
             else
             {
-                sidebar[SB_MOUSE_CLICKED] = "LEFT CLICK " +
-                                            mouse_pos_string(window);
 
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 for (int i = 0; i < history.getEquationBoxes().size(); ++i)

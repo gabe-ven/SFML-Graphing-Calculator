@@ -12,3 +12,7 @@ ln(ln(ln(x)))
 tan(cos(x^2)) * e(sin(x))
 x * sin(ln(x))
 sin(x^2 + tan(cos(x^3)))
+sin(1/x)
+cos(sin(1/x))
+xsin(1/x)
+x

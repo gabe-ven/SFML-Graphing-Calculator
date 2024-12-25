@@ -16,7 +16,7 @@ sf::Vector2f CoordTranslator::translate(sf::Vector2f point)
 
     double screen_x, screen_y;
 
-    if (_info->get_polar())
+    if (_info->get_polar()) // toggle polar
     {
         double r = point.x;
         double theta = point.y;

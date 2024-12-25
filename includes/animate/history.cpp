@@ -8,11 +8,10 @@ History::History()
     _width = SIDE_BAR - 2;
 
     rect.setFillColor(sf::Color(50, 50, 50));
-
     rect.setPosition(sf::Vector2f(_left, 100));
     rect.setSize(sf::Vector2f(_width, HEIGHT));
 
-    // Load font
+    // load font
     if (!font.loadFromFile("Roboto-Thin.ttf"))
     {
         cout << "History CTOR: Font failed to load" << std::endl;
@@ -29,16 +28,16 @@ History::History()
 
 void History::addHistory(const string &equation)
 {
-    history.push_back(equation);
-    if (history.size() > 7)
+    history.push_back(equation); // add the equation to history vector
+    if (history.size() > 11)     // dont let equations exceed 7
     {
-        history.erase(history.begin());
+        history.erase(history.begin()); // erase the first equation and replace with newest one
     }
 }
 
 void History::loadEquations()
 {
-    ifstream file("functions.txt");
+    ifstream file("functions.txt"); // read from file
 
     if (!file.is_open())
     {
@@ -56,7 +55,7 @@ void History::loadEquations()
 
     file.close();
 
-    while (history.size() > 7)
+    while (history.size() > 11)
     {
         history.erase(history.begin());
     }
@@ -64,7 +63,7 @@ void History::loadEquations()
 
 void History::draw(sf::RenderWindow &window)
 {
-    const double VERTICAL_LINE_SPACING = 30.0;
+    const double VERTICAL_LINE_SPACING = 0.0;
     const double BOTTOM_MARGIN = 5.0;
     const double BOX_HEIGHT = 40.0;
 
@@ -106,5 +105,5 @@ vector<sf::RectangleShape> &History::getEquationBoxes()
 
 string &History::operator[](int index)
 {
-    return history[index];
+    return history[index]; // get specfic equation
 }

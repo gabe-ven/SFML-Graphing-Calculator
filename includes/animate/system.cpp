@@ -1,7 +1,5 @@
 #include "system.h"
 
-// g++ includes/animate/animate.cpp includes/animate/sidebar.cpp includes/animate/system.cpp includes/animate/random.cpp includes/animate/graph.cpp includes/animate/graph_info.cpp includes/animate/plot.cpp includes/token/operator.cpp includes/token/function.cpp includes/shunting_yard/shunting_yard.cpp includes/rpn/rpn.cpp main.cpp includes/animate/coord_translator.cpp includes/tokenizer/tokenizer.cpp  -I/opt/homebrew/Cellar/sfml/2.6.1/include -o prog -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system
-
 System::System(Graph_info *info) : _g(info) // pass info to graph
 {
     _info = info;
